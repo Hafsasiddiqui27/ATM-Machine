@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 import inquirer from "inquirer";
 
 // ********* ATM MACHINE **************
@@ -39,11 +41,13 @@ if (user_Pin_Answer.pin === user_Pin) {
         name: "amount",
       },
     ]);
-    user_Balance -= amount_Ans.amount;
-    if (amount_Ans.amount > user_Balance) {
-      console.log("You have insufficient balance..");
+    
+    // if (user_Balance >= amount_Ans.amount) {
+      if (amount_Ans.amount  <= user_Balance ) {
+      user_Balance -= amount_Ans.amount;
+      console.log(`Your balance is ${user_Balance}`);
     } else {
-      console.log(`Your current balance is ${user_Balance}`);
+      console.log("You have insufficient balance..");
     }
   } else if (operation_Ans.operation === "fastCash") {
     let fastCash_Ans = await inquirer.prompt([
