@@ -12,29 +12,42 @@ let user_Answer = await inquirer.prompt([
         name: "userPin",
     }
 ]);
-if (user_Pin === user_Answer.userPin) {
-    console.log(`Choose the following operations`);
+if (user_Answer.userPin === user_Pin) {
+    console.log("correct!!!");
     let operation_Ans = await inquirer.prompt([{
             message: "select one",
             type: "list",
-            name: "operations",
+            name: "operation",
             choices: ["cashWithdraw", "fastCash", "checkBalance"]
         }]);
     console.log(operation_Ans);
-    if (operation_Ans === "cashWithdraw") {
+    if (operation_Ans.operation === "cashWithdraw") {
+        console.log(`Enter amount you want to withdraw`);
         let amount_Ans = await inquirer.prompt([{
                 message: "enter amount",
                 type: "number",
                 name: "amount",
             }]);
+        user_Balance -= amount_Ans.amount;
+        if (amount_Ans.amount > user_Balance) {
+            console.log("You have insufficient balance..");
+        }
+        else {
+            console.log(`Your current balance is ${user_Balance}`);
+        }
     }
-    else if (operation_Ans === operation_Ans.fastCash) {
+    else if (operation_Ans.operation === "fastCash") {
         let fastCash_Ans = await inquirer.prompt([{
-                message: "enter amount",
+                message: "select one",
                 type: "list",
                 name: "fastCash",
                 choices: ["1000", "2000", "5000", "10000"],
             }]);
+        user_Balance -= fastCash_Ans.fastCash;
+        console.log(`Your current balance is ${user_Balance}`);
+    }
+    else if (operation_Ans.operation === "checkBalance") {
+        console.log(`Your current balance is ${user_Balance}`);
     }
 }
 else {
